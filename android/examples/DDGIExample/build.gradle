@@ -1,0 +1,127 @@
+apply plugin: 'com.android.application'
+apply from: '../gradle/outputfilename.gradle'
+
+android {
+    signingConfigs {
+        debug {
+            storeFile file('DDGIExample.jks')
+            storePassword '123456'
+            keyAlias 'key0'
+            keyPassword '123456'
+        }
+        release {
+            storeFile file('DDGIExample.jks')
+            storePassword '123456'
+            keyAlias 'key0'
+            keyPassword '123456'
+        }
+    }
+    compileSdkVersion 29
+    defaultConfig {
+        applicationId "com.samples.huawei_VulkanDDGI"
+        minSdkVersion 28
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        ndk {
+            abiFilters "arm64-v8a"
+        }
+        externalNativeBuild {
+            cmake {
+                cppFlags "-std=c++14"
+                arguments "-DANDROID_STL=c++_shared"
+            }
+        }
+    }
+    sourceSets {
+        main.assets.srcDirs = ['assets']
+        main.jniLibs.srcDirs = ['src/main/libs']
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
+            version "3.14.0+"
+        }
+    }
+}
+
+task copyTask {
+    copy {
+        from '../../../libs'
+        into "src/main/libs"
+        include 'librtcore.so'
+    }
+    copy {
+        from '../../../libs'
+        into "src/main/libs"
+        include 'libddgi.so'
+    }
+    copy {
+        from '../../../libs'
+        into ".externalNativeBuild/cmake/debug/arm64-v8a/c++_shared/arm64-v8a"
+        include 'libshaderc.a'
+    }
+    copy {
+        from '../../common/res/drawable'
+        into "src/main/res/drawable"
+        include 'icon.png'
+    }
+    copy {
+        from '../../../libs'
+        into "src/main/res/drawable"
+        include 'icon.png'
+    }
+
+    copy {
+        from '../../../data/shaders/glsl/base'
+        into 'assets/shaders/glsl/base'
+        include '*.spv'
+    }
+
+    copy {
+       from '../../../data/shaders/glsl/woodenroom'
+       into 'assets/shaders/glsl/woodenroom'
+       include '*.spv'
+    }
+
+    copy {
+       from '../../../data/models'
+       into 'assets/models'
+       include 'woodenRoom.gltf'
+    }
+
+    copy {
+       from '../../../data/models'
+       into 'assets/models'
+       include '*.gltf'
+    }
+
+    copy {
+       from '../../../data/textures'
+       into 'assets/textures'
+       include 'cubemap_space.ktx'
+    }
+}
+preBuild.dependsOn copyTask
+
+task copy_libshaderc {
+    copy {
+        from '../../../libs'
+        into ".externalNativeBuild/cmake/debug/arm64-v8a/c++_shared/arm64-v8a"
+        include 'libshaderc.a'
+    }
+}
+preBuild.dependsOn copy_libshaderc
+
+clean {
+    delete fileTree('../bin') {
+        include '*.apk'
+    }
+}
