@@ -3,7 +3,7 @@
  *
  * This code is licensed under the MIT license (MIT) (http://opensource.org/licenses/MIT)
  */
-package com.samples.huawei_VulkanDDGI;
+package com.huawei.ddgi.vkExample;
 
 import android.app.AlertDialog;
 import android.app.NativeActivity;
