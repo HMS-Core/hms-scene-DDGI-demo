@@ -1,7 +1,4 @@
 # DDGI Sample
-English | [中文](README_ZH.md)
-
-
 
 Firstly, compile shaders file by the cmd:
     python3 .\data\shaders\glsl\compileshaders.py
