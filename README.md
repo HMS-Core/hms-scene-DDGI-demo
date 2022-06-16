@@ -1,6 +1,6 @@
 # DDGI Sample
 
-English | [中文](https://github.com/HMS-Core/hms-scene-DDGI-demo/blob/main/README%20-%20ZH.md)
+English | [中文](README-zh.md)
 
 Firstly, compile shaders file by the cmd:
     python3 .\data\shaders\glsl\compileshaders.py
