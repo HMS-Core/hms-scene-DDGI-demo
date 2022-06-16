@@ -17,7 +17,7 @@
 
 （Woodenroom，from:https://sketchfab.com/3d-models/room-266d02119c494b4cbaf759d774df8494，License: CC Attribution）
 
-<video src="assets/woodenroom-android.mp4"></video>
+![woodenroom](assets/woodenroom.gif)
 
 ## 编译
 
