@@ -11,11 +11,11 @@
 
 ## 简介
 
-本项目主要是用于展示如使用华为提供的移动端动态漫反射全局光照（DDGI），在前向管线上实现动态光照漫反射全局照明的效果，提升场景画质。项目中关于Vulkan的管线借鉴了SaschaWillems的VulkanExample[[1\]](https://github.com/SaschaWillems/Vulkan)项目，例子中关于PBR部分知识参考了LearnOpenGL[[2\]](https://learnopengl-cn.github.io/07%20PBR/02%20Lighting/#pbr), DDGI算法的实现参考了英伟达RTXGI[[3\]](https://https://github.com/NVIDIAGameWorks/RTXGI)。
+本项目主要是用于展示如使用华为提供的移动端动态漫反射全局光照（DDGI），在前向管线上实现动态光照漫反射全局照明的效果，提升场景画质。项目中关于Vulkan的管线借鉴了SaschaWillems的VulkanExample[[1\]](https://github.com/SaschaWillems/Vulkan)项目，例子中关于PBR部分知识参考了LearnOpenGL[[2\]](https://learnopengl-cn.github.io/07%20PBR/02%20Lighting/#pbr), DDGI算法的实现参考了英伟达RTXGI[[3\]](https://github.com/NVIDIAGameWorks/RTXGI)。
 
 Room场景上使能DDGI的效果如下，运行平台：Mate40Pro
 
-（Woodenroom，from:https://sketchfab.com/3d-models/room-266d02119c494b4cbaf759d774df8494，License: CC Attribution）
+（Woodenroom，from:https://sketchfab.com/3d-models/room-266d02119c494b4cbaf759d774df8494, License: CC Attribution）
 
 ![woodenroom](assets/woodenroom.gif)
 
