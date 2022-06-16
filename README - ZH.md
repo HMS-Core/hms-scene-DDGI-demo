@@ -84,4 +84,4 @@ DDGI的总体分为以下三个阶段：
 
 ## 许可证
 
-DDGI示例代码采用的许可证为Apache License, version 2.0，参考 [LICENSE.md](https://github.com/HMS-Core/hms-scene-ddgi-demo/blob/master/LICENSE.md) 获取更多许可证信息；
+DDGI示例代码采用的许可证为Apache License, version 2.0，参考 [LICENSE.md](https://github.com/HMS-Core/hms-scene-ddgi-demo/blob/master/LICENSE.md) 获取更多许可证信息。
