@@ -57,7 +57,7 @@ adb shell am start -n "com.huawei.ddgi.vkExample/.VulkanActivity"
 
 本例子在前向渲染管线的基础上，叠加了DDGI的间接光效果，具体流程如下图：
 
-![DDGI](assets/DDGI-1655281049240.png)
+![DDGI](assets/DDGI.png)
 
 DDGI的总体分为以下三个阶段：
 
@@ -80,7 +80,7 @@ DDGI的总体分为以下三个阶段：
 
 [2] [learnOpenGL/PBR](https://learnopengl-cn.github.io/07%20PBR/02%20Lighting/#pbr)
 
-[3][Nvidia/RTXGI](https://github.com/NVIDIAGameWorks/RTXGI)
+[3] [Nvidia/RTXGI](https://github.com/NVIDIAGameWorks/RTXGI)
 
 ## 许可证
 
