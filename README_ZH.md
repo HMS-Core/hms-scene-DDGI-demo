@@ -57,7 +57,7 @@ adb shell am start -n "com.huawei.ddgi.vkExample/.VulkanActivity"
 
 本例子在前向渲染管线的基础上，叠加了DDGI的间接光效果，具体流程如下图：
 
-![DDGI](assets/DDGI.png)
+![DDGI](assets/DDGI-1655281049240_ZH.png)
 
 DDGI的总体分为以下三个阶段：
 
