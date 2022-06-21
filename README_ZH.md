@@ -11,11 +11,11 @@
 
 ## 简介
 
-本项目主要是用于展示如使用华为提供的移动端动态漫反射全局光照（DDGI），在前向管线上实现动态光照漫反射全局照明的效果，提升场景画质。项目中关于Vulkan的管线借鉴了SaschaWillems的VulkanExample[[1\]](https://github.com/SaschaWillems/Vulkan)项目，例子中关于PBR部分知识参考了LearnOpenGL[[2\]](https://learnopengl-cn.github.io/07%20PBR/02%20Lighting/#pbr), DDGI算法的实现参考了英伟达RTXGI[[3\]](https://github.com/NVIDIAGameWorks/RTXGI)。
+本项目主要是用于展示如使用华为提供的移动端动态漫反射全局光照（DDGI），在前向管线上实现动态光照漫反射全局照明的效果，提升场景画质。项目中关于Vulkan的管线借鉴了SaschaWillems的VulkanExample[[1\]](https://github.com/SaschaWillems/Vulkan)项目，例子中关于PBR部分知识参考了LearnOpenGL[[2\]](https://learnopengl-cn.github.io/07%20PBR/02%20Lighting/#pbr), DDGI算法的实现参考了英伟达RTXGI[[3\]](https://https://github.com/NVIDIAGameWorks/RTXGI)。
 
 Room场景上使能DDGI的效果如下，运行平台：Mate40Pro
 
-（Woodenroom，from:https://sketchfab.com/3d-models/room-266d02119c494b4cbaf759d774df8494, License: CC Attribution）
+（Woodenroom，from:https://sketchfab.com/3d-models/room-266d02119c494b4cbaf759d774df8494，License: CC Attribution）
 
 ![woodenroom](assets/woodenroom.gif)
 
@@ -27,6 +27,7 @@ Room场景上使能DDGI的效果如下，运行平台：Mate40Pro
    - Android studio 4.0及以上版本
    - ndk 20.1.5948944及以上版本
    - Android SDK 29.0.0及以上版本
+   - Java JDK 1.8.0及以上版本
 
 设置环境变量ANDROID_HOME ANDROID_NDK_HOME分别指向 Android SDK目录和NDK目录
 
@@ -51,13 +52,13 @@ adb shell am start -n "com.huawei.ddgi.vkExample/.VulkanActivity"
 
 注意：如果对该工程的shader代码有修改，请执行以下指令进行编译更新：
 
-`python3 .\data\shaders\glsl\compileshaders.py`
+`python .\data\shaders\glsl\compileshaders.py`
 
 ## 例子
 
 本例子在前向渲染管线的基础上，叠加了DDGI的间接光效果，具体流程如下图：
 
-![DDGI](assets/DDGI-1655281049240_ZH.png)
+![DDGI_Diagram](assets/ddgi_diagram_ZH.png)
 
 DDGI的总体分为以下三个阶段：
 
@@ -72,7 +73,7 @@ DDGI的总体分为以下三个阶段：
 
 最终，直接光+DDGI间接光的结果如图所示：
 
-![1655281011338](assets/1655281011338.png)
+![Final_Shading](assets/final_shading.png)
 
 ## 参考项目
 
@@ -84,4 +85,4 @@ DDGI的总体分为以下三个阶段：
 
 ## 许可证
 
-DDGI示例代码采用的许可证为Apache License, version 2.0，参考 [LICENSE.md](https://github.com/HMS-Core/hms-scene-DDGI-demo/blob/main/LICENSE) 获取更多许可证信息。
+DDGI示例代码采用的许可证为Apache License, version 2.0，参考 [LICENSE.md](LICENSE) 获取更多许可证信息。
