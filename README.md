@@ -6,7 +6,7 @@ English | [中文](README_ZH.md)
  * [Introduction](#introduction)
  * [Compilation](#compilation)
  * [Example](#example)
- * [Reference Projects](#reference projects)
+ * [Reference Projects](#reference-projects)
  * [License](#license)
 
 ## Introduction
