@@ -37,22 +37,19 @@ struct PushConstBlockMaterial {
 };
 
 #define ENABLE_VALIDATION true
-#define USE_SKYBOX_FEATURE false
 #define PASS_SHADOWMAP_INTO_DDGISDK true
-
-// basecolor, normal, emissive, metallicroughness, occlusion
-const int TEXTURE_PER_MATERIAL = 5;
-const int UNIFORM_BUFFER_NUM = 5;
-// vertex shader, fragment shader
-const int SHADER_STAGE_NUM = 2;
-const int SHADOWMAP_WIDTH = 512;
-const int SHADOWMAP_HEIGHT = 512;
-const int RENDER_EVERY_NUM_FRAME = 2;
+const int SHADER_STAGE_NUM = 2; // vertex shader, fragment shader.
 
 enum class ModelName {
     WOODENROOM,
     SAMPLEBUILDING,
     GREYWHITEROOM,
+};
+
+enum ExampleAttach {
+    COLOR_ATTACHMENT_IDX = 0,
+    DEPTH_ATTACHMENT_IDX = 1,
+    MAX_ATTACHMENT = 2,
 };
 
 inline DDGI::Vec2f VecInterface(const glm::vec2& vec2)
@@ -109,15 +106,10 @@ inline std::vector<DDGI::Mat4f> MatInterface(const std::vector<glm::mat4>& mats)
     return matrices;
 }
 
-// this sample uses SaschaWillemsVulkan open source code
-// for detailed model data information, please view VulkanglTFModel
+// This sample uses SaschaWillemsVulkan open source code
+// for detailed model data information, please view VulkanglTFModel.
 class DDGIExample : public VulkanExampleBase {
 public:
-    enum ExampleAttach {
-        COLOR_ATTACHMENT_IDX = 0,
-        DEPTH_ATTACHMENT_IDX = 1,
-        MAX_ATTACHMENT = 2,
-    };
     DDGIExample();
     ~DDGIExample();
 
@@ -127,20 +119,20 @@ public:
     virtual void BuildCommandBuffers();
 
 private:
-    // ddgi
-    void PrepareDDGI();
-    void PrepareDDGIMeshes();
-    void PrepareDDGIOutputTex(const vks::Texture& tex,
-                              DDGIVulkanImage* texture) const;
-    void SetupDDGIDeviceInfo();
-    void SetupDDGIParameters();
-    void SetupDDGILights();
-    void SetupDDGICamera();
-    DDGIVulkanImage SetupMaterialTexture(vkglTF::Texture* tex) const;
+    // basecolor, normal, emissive, metallic roughness, occlusion.
+    const int TEXTURE_PER_MATERIAL = 5;
+    const int UNIFORM_BUFFER_NUM = 5;
+    const int SHADOWMAP_WIDTH = 512;
+    const int SHADOWMAP_HEIGHT = 512;
 
-    uint32_t m_frameCnt = 0;
-    bool m_ddgiON = true;
+    // Render DDGI every a specific number of frames.
+    // Theoretically, the bigger the number, the better the rendering performance,
+    // but the worse the rendering result may be.
+    const int RENDER_EVERY_NUM_FRAME = 2;
+
+    // ddgi
     std::unique_ptr<DDGIAPI> m_ddgiRender;
+    bool m_ddgiON = true;
     DDGIDirectionalLight m_ddgiDirLight;
     std::map<int, DDGIMesh> m_ddgiMeshes;
     DDGICamera m_ddgiCamera;
@@ -154,51 +146,27 @@ private:
     std::unique_ptr<vks::Framebuffer> m_shadowmapFramebuffer;
     VkDescriptorImageInfo m_shadowmapDescriptor;
     VkCommandBuffer m_shadowmapCmd;
-    void SetupShadowmapPipeline();
-    void SetupShadowmapFrameBuffer();
-    void SetupShadowmapImgInfoDescriptor();
-    void BuildShadowmapCmdBuffer();
-    void DrawShadowmapNode(const vkglTF::Node* node, VkCommandBuffer cmdBuffer) const;
 
+    // common
+    uint32_t m_frameCnt = 0;
     VkSampler m_defaultSampler;
-    ModelName m_modelName;
-
-    glm::mat4 CalculateDirLightMVP() const;
-    void SetupCamera(glm::vec3 position, glm::vec3 rotation, float fov);
-    void SetupDirLight(glm::vec3 eye, glm::vec3 target, glm::vec3 color, float power);
-    void LoadAssets(uint32_t glTFLoadingFlags, ModelName model);
-    void CreateSampler();
-    void CreateDDGITexture();
-    void SetupDescriptorPool();
-    void SetupDescriptorSetLayouts();
-    void SetupDescriptorSets();
-    void PrepareUniformBuffers();
-    void SetupPipelines();
-    void SetupPipelineLayouts();
-    void UpdateUniformBuffers();
-    void DrawSceneNode(const vkglTF::Node* node, VkCommandBuffer cmdBuffer) const;
-    void DrawScene(VkCommandBuffer commandBuffer) const;
-    void Draw();
-
     vkglTF::Model m_models;
-    vks::Texture m_irradianceTex;
-    vks::Texture m_normalDepthTex;
-    struct {
-        float gamma = 2.2;
-        int ddgiDownSizeScale = 4;
-        int ddgiTexWidth;
-        int ddgiTexHeight;
-        int ddgiEffectOn = 1;
-    } m_shadingPara;
-
+    ModelName m_modelName;
+    vks::Texture m_irradianceTex; // to save DDGI's irradiance texture.
+    vks::Texture m_normalDepthTex; // to save DDGI's normal depth texture.
     VPMatrix m_sceneVP;
     DirectionalLight m_dirLight;
     glm::vec3 m_dirLightOriDirection;
     int m_dirLightRotation = 0;
-
-    // The skybox isn't supported now
-    // The related components of skybox are reserved for extension.
-    vks::TextureCubeMap m_cubemap;
+    struct {
+        float gamma = 2.2;
+        // The larger the value, the smaller the texture resolution and
+        // the better the performance, but the aliasing may be more obvious.
+        int ddgiDownSizeScale = 4; 
+        int ddgiTexWidth;
+        int ddgiTexHeight;
+        int ddgiEffectOn = 1;
+    } m_shadingPara;
 
     struct {
         vks::Buffer sceneVP;
@@ -230,5 +198,80 @@ private:
         VkDescriptorSet meshUniformBuffer;
         VkDescriptorSet materialTexs;
     } m_descriptorSets;
+
+    // ddgi
+    /**
+     * Preparation stage.
+     */
+    void PrepareDDGI();
+
+    /**
+     * Prepare the meshes' data specified by DDGI.
+     */
+    void PrepareDDGIMeshes();
+
+    /**
+     * Setup the vulkan texture handler to save the DDGI's output.
+     * @param[in]   texture             The texture created by user.
+     * @param[in]   DDGITexture         The vulkan texture handler data specified by DDGI.
+     */
+    void PrepareDDGIOutputTex(const vks::Texture& texture,
+                              DDGIVulkanImage* DDGITexture) const;
+
+    /**
+     * Setup the vulkan device infomation specified by DDGI.
+     */
+    void SetupDDGIDeviceInfo();
+
+    /**
+     * Setup the parameters of the DDGI.
+     */
+    void SetupDDGIParameters();
+
+    /**
+     * Setup the light's infomation specified by DDGI.
+     */
+    void SetupDDGILights();
+
+    /**
+     * Setup the camera's infomation specified by DDGI.
+     */
+    void SetupDDGICamera();
+
+    /**
+     * Setup the material's texture infomation specified by DDGI.
+     * @param[in]   texture             The pointer to the texture of material.
+     * @return      DDGIVulkanImage     The vulkan texture handler specified by DDGI.
+     */
+    DDGIVulkanImage SetupMaterialTexture(vkglTF::Texture* texture) const;
+
+    // shadow map
+    void SetupShadowmapPipeline();
+    void SetupShadowmapFrameBuffer();
+    void SetupShadowmapImgInfoDescriptor();
+    void BuildShadowmapCmdBuffer();
+    void DrawShadowmapNode(const vkglTF::Node* node, VkCommandBuffer cmdBuffer) const;
+    glm::mat4 CalculateDirLightMVP() const;
+
+    // common
+    void SetupCamera(glm::vec3 position, glm::vec3 rotation, float fov);
+    void SetupDirLight(glm::vec3 eye, glm::vec3 target, glm::vec3 color, float power);
+    void LoadAssets(uint32_t glTFLoadingFlags, ModelName model);
+    void CreateSampler();
+
+    /**
+     * Create 2 textures to save DDGI result, one for irradiance, another for normal depth.
+     */
+    void CreateDDGITexture();
+    void SetupDescriptorPool();
+    void SetupDescriptorSetLayouts();
+    void SetupDescriptorSets();
+    void PrepareUniformBuffers();
+    void SetupPipelines();
+    void SetupPipelineLayouts();
+    void UpdateUniformBuffers();
+    void DrawSceneNode(const vkglTF::Node* node, VkCommandBuffer cmdBuffer) const;
+    void DrawScene(VkCommandBuffer commandBuffer) const;
+    void Draw();
 };
 #endif

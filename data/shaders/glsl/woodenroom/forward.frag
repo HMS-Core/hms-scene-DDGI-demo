@@ -8,7 +8,7 @@ layout (location = 4) in mat3 inTBN;
 
 layout(location = 0) out vec4 resultImage;
 
-layout (set = 0, binding = 0) uniform UBO 
+layout (set = 0, binding = 0) uniform UBO
 {
     mat4 projection;
     mat4 view;
@@ -134,11 +134,10 @@ vec3 Bilateral(ivec2 uv, vec3 normal)
 float textureProj(vec4 shadowCoord, vec2 off)
 {
     float shadow = 1.0;
-    if ( shadowCoord.z > -1.0 && shadowCoord.z < 1.0 ) 
+    if ( shadowCoord.z > -1.0 && shadowCoord.z < 1.0 )
     {
         float dist = texture(shadowmapTex, shadowCoord.st + off).r;
-        if ( shadowCoord.w > 0.0 && dist < (shadowCoord.z - 0.01) ) 
-        {
+        if (shadowCoord.w > 0.0 && dist < (shadowCoord.z - 0.01)) {
             shadow = 0.0;
         }
     }
@@ -215,10 +214,10 @@ void main()
 
     vec3 irradiancess = vec3(0.0);
     ivec2 texUV = ivec2(gl_FragCoord.xy);
+    texUV.y = shadingPara.ddgiTexHeight - texUV.y;
     if (shadingPara.ddgiDownSizeScale == 1) {
         irradiancess = texelFetch(irradianceTex, texUV, 0).xyz;
     } else {
-        texUV.y = shadingPara.ddgiTexHeight - texUV.y;
         ivec2 inDirectUV = ivec2(vec2(texUV) / vec2(shadingPara.ddgiDownSizeScale));
         irradiancess = Bilateral(inDirectUV, N);
     }
@@ -231,11 +230,11 @@ void main()
     float NoL = clamp(dot(N, L), 0.0, 1.0);
     float NoH = clamp(dot(N, H), 0.0, 1.0);
     float VoH = clamp(dot(V, H), 0.0, 1.0);
-    
+
     vec3 directionLightRes = vec3(0.0);
     vec3 directRes = vec3(0.0);
 
-    vec3 F0 = vec3(0.04); 
+    vec3 F0 = vec3(0.04);
     F0 = mix(F0, baseColor.xyz, metalness);
     float D = DistributionGGX(N, H, roughness);
     float G = GeometrySmith(N, V, L, roughness);

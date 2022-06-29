@@ -34,27 +34,30 @@ add_subdirectory(../base ${CMAKE_SOURCE_DIR}/../base)
 # build ddgi.so with source code
 # build rtcore.so with source code
 # compile rayshop src for debug
-set(BUILD_DDGI_ANDROID_SAMPLE_WITH_SOURCE_CODE FALSE)
+option(BUILD_DDGI_WITH_CODE "build DDGI with source code" OFF)
+option(BUILD_RTCORE_WITH_CODE "build rtcore with source code" OFF)
 
-if (BUILD_DDGI_ANDROID_SAMPLE_WITH_SOURCE_CODE)
+if (BUILD_RTCORE_WITH_CODE)
     if(NOT RTCORE_DIR)
         set(RTCORE_DIR ../../../../rtcore)
     endif()
     add_subdirectory(${RTCORE_DIR}/../platform/huawei_securec ${RTCORE_DIR}/../platform/huawei_securec/out)
     add_subdirectory(${RTCORE_DIR} ${RTCORE_DIR}/out)
-
-    add_definitions(-DBUILD_DDGI_SAMPLE)
-    if(NOT DDGISDK_DIR)
-        set(DDGISDK_DIR ../../../../DDGISDK)
-    endif()
-    add_subdirectory(${DDGISDK_DIR} ${DDGISDK_DIR}/out)
 else ()
     # librtcore.so导入
     ADD_LIBRARY(rtcore SHARED IMPORTED)
     SET_TARGET_PROPERTIES(rtcore
             PROPERTIES IMPORTED_LOCATION
             ${CMAKE_SOURCE_DIR}/src/main/libs/librtcore.so)
+endif()
 
+if (BUILD_DDGI_WITH_CODE)
+    add_definitions(-DBUILD_DDGI_SAMPLE)
+    if(NOT DDGISDK_DIR)
+        set(DDGISDK_DIR ../../../../DDGISDK)
+    endif()
+    add_subdirectory(${DDGISDK_DIR} ${DDGISDK_DIR}/out)
+else ()
     # libddgi.so导入
     ADD_LIBRARY(ddgi SHARED IMPORTED)
     SET_TARGET_PROPERTIES(ddgi

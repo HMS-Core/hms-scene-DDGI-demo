@@ -50,6 +50,12 @@ android {
             version "3.14.0+"
         }
     }
+    dependencies {
+        implementation 'com.huawei.hms:hwid:5.0.3.301'
+        implementation 'com.huawei.hms:iap:5.0.2.300'
+        implementation 'com.huawei.hms:game:5.0.3.301'
+        implementation 'com.huawei.scenekit:scenekit-analytics:5.1.0.300'
+    }
 }
 
 task copyTask {
@@ -65,7 +71,12 @@ task copyTask {
     }
     copy {
         from '../../../libs'
-        into ".externalNativeBuild/cmake/debug/arm64-v8a/c++_shared/arm64-v8a"
+        into ".cxx\\cmake\\release\\arm64-v8a\\c++_shared\\arm64-v8a\\"
+        include 'libshaderc.a'
+    }
+    copy {
+        from '../../../libs'
+        into ".cxx\\cmake\\debug\\arm64-v8a\\c++_shared\\arm64-v8a\\"
         include 'libshaderc.a'
     }
     copy {

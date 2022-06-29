@@ -79,26 +79,32 @@ ELSE(WIN32)
 ENDIF(WIN32)
 
 #
-set(BUILD_DDGI_SAMPLE_WITH_SOURCE_CODE FALSE)
+option(BUILD_DDGI_WITH_CODE "build DDGI with source code" OFF)
+option(BUILD_RTCORE_WITH_CODE "build rtcore with source code" OFF)
 
-if (BUILD_DDGI_SAMPLE_WITH_SOURCE_CODE)
-	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../DDGISDK ${CMAKE_CURRENT_SOURCE_DIR}/../DDGISDK/out)
+if (BUILD_RTCORE_WITH_CODE)
 	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../rtcore ${CMAKE_CURRENT_SOURCE_DIR}/../rtcore/out)
-else()
-	if (WIN32)
-	add_library(ddgi STATIC IMPORTED)
-	set_target_properties(ddgi
-		PROPERTIES IMPORTED_LOCATION
-		${CMAKE_CURRENT_SOURCE_DIR}/libs/ddgi.lib)
-	list(APPEND LINK_LIBS ${ddgi})
-
-	add_library(rtcore STATIC IMPORTED)
+else ()
+    # rtcore.libµ¼Èë
+    add_library(rtcore STATIC IMPORTED)
 	set_target_properties(rtcore
 		PROPERTIES IMPORTED_LOCATION
 		${CMAKE_CURRENT_SOURCE_DIR}/libs/rtcore.lib)
 	list(APPEND LINK_LIBS ${rtcore})
-	endif ()
 endif()
+
+if (BUILD_DDGI_WITH_CODE)
+    add_definitions(-DBUILD_DDGI_SAMPLE)
+    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../DDGISDK ${CMAKE_CURRENT_SOURCE_DIR}/../DDGISDK/out)
+else ()
+    # ddgi.libµ¼Èë
+    add_library(ddgi STATIC IMPORTED)
+	set_target_properties(ddgi
+		PROPERTIES IMPORTED_LOCATION
+		${CMAKE_CURRENT_SOURCE_DIR}/libs/ddgi.lib)
+	list(APPEND LINK_LIBS ${ddgi})
+endif()
+
 add_subdirectory(3rdparty/SaschaWillems)
 add_subdirectory(examples)
 

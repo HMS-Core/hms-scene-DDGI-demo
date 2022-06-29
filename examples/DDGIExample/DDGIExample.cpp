@@ -142,6 +142,8 @@ void DDGIExample::SetupDirLight(vec3 eye, vec3 target, vec3 color, float power)
     m_dirLight.color = vec4(color, 1.0);
     vec3 direction = normalize(target - eye);
     m_dirLight.dirAndPower = vec4(direction, power);
+
+    // The transformation matrix form world to light.
     m_dirLight.worldToLocal = lookAt(eye, target, vec3(0, 1, 0));
     m_dirLightOriDirection = direction;
 }
@@ -730,21 +732,21 @@ void DDGIExample::OnUpdateUIOverlay(vks::UIOverlay* overlay)
     }
 }
 
-void DDGIExample::PrepareDDGIOutputTex(const vks::Texture& tex,
-                                       DDGIVulkanImage* texture) const
+void DDGIExample::PrepareDDGIOutputTex(const vks::Texture& texture,
+                                       DDGIVulkanImage* DDGItexture) const
 {
-    texture->image = tex.image;
-    texture->format = tex.format;
-    texture->type = VK_IMAGE_TYPE_2D;
-    texture->extent.width = tex.width;
-    texture->extent.height = tex.height;
-    texture->extent.depth = 1;
-    texture->usage = tex.usage;
-    texture->layout = tex.imageLayout;
-    texture->layers = 1;
-    texture->mipCount = 1;
-    texture->samples = VK_SAMPLE_COUNT_1_BIT;
-    texture->tiling = VK_IMAGE_TILING_OPTIMAL;
+    DDGItexture->image = texture.image;
+    DDGItexture->format = texture.format;
+    DDGItexture->type = VK_IMAGE_TYPE_2D;
+    DDGItexture->extent.width = texture.width;
+    DDGItexture->extent.height = texture.height;
+    DDGItexture->extent.depth = 1;
+    DDGItexture->usage = texture.usage;
+    DDGItexture->layout = texture.imageLayout;
+    DDGItexture->layers = 1;
+    DDGItexture->mipCount = 1;
+    DDGItexture->samples = VK_SAMPLE_COUNT_1_BIT;
+    DDGItexture->tiling = VK_IMAGE_TILING_OPTIMAL;
 }
 
 void DDGIExample::CreateDDGITexture()
@@ -770,23 +772,25 @@ void DDGIExample::CreateDDGITexture()
                                       m_defaultSampler);
 }
 
-DDGIVulkanImage DDGIExample::SetupMaterialTexture(vkglTF::Texture* tex) const
+DDGIVulkanImage DDGIExample::SetupMaterialTexture(vkglTF::Texture* texture) const
 {
     DDGIVulkanImage ddgiImg;
-    if (tex == nullptr) {
+    if (texture == nullptr) {
         ddgiImg.image = VK_NULL_HANDLE;
     } else {
-        ddgiImg.image = tex->image;
+        ddgiImg.image = texture->image;
         ddgiImg.useImageDescInfo = true;
-        ddgiImg.imageDescriptorInfo.imageLayout = tex->imageLayout;
-        ddgiImg.imageDescriptorInfo.imageView = tex->view;
-        ddgiImg.imageDescriptorInfo.sampler = tex->sampler;
+        ddgiImg.imageDescriptorInfo.imageLayout = texture->imageLayout;
+        ddgiImg.imageDescriptorInfo.imageView = texture->view;
+        ddgiImg.imageDescriptorInfo.sampler = texture->sampler;
     }
     return ddgiImg;
 }
 
 void DDGIExample::PrepareDDGIMeshes()
 {
+    // In this sample, a node in the model, which is gltf format, is equal to a mesh in DDGI,
+    // and a primitive is equal to a submesh in DDGI.
     for (const auto& node : m_models.linearNodes) {
         DDGIMesh tmpMesh;
         tmpMesh.meshName = node->name;
@@ -800,6 +804,7 @@ void DDGIExample::PrepareDDGIMeshes()
                 }
             }
 
+            // Double check the correspondence of the submesh data.
             for (vkglTF::Primitive* primitive : node->mesh->primitives) {
                 DDGIMaterial material;
                 material.alphaCutoff = primitive->material.alphaCutoff;
@@ -810,6 +815,7 @@ void DDGIExample::PrepareDDGIMeshes()
                 material.metallicRoughnessTexture = SetupMaterialTexture(primitive->material.metallicRoughnessTexture);
                 tmpMesh.materials.emplace_back(material);
 
+                // Setup the index data of mesh.
                 tmpMesh.subMeshStartIndexes.push_back(tmpMesh.meshIndice.size());
                 int currentVertNum = tmpMesh.meshVertex.size();
                 int indexStart = primitive->firstIndex;
@@ -819,6 +825,7 @@ void DDGIExample::PrepareDDGIMeshes()
                 tmpMesh.subMeshIndexCnts.push_back(primitive->indexCount);
 
                 int vertexStart = primitive->firstVertex;
+                // Setup the vertex data of mesh.
                 for (int i = 0; i < primitive->vertexCount; i++) {
                     DDGIVertex vertex;
                     vertex.pos = VecInterface(m_models.m_vertexBuffer.at(vertexStart + i).pos);

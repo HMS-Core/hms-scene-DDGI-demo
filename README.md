@@ -47,7 +47,7 @@ adb shell am start -n "com.huawei.ddgi.vkExample/.VulkanActivity"
 1. Development environment
    - Visual Studio 2019 or later
    - Vulkan SDK 1.2.176.1 or later
-   - CMake 3.16 or later
+   - Cmake 3.16 or later
    - Python 3.6.0 or later
 2. Perform CMake compilation in the directory where the **CmakeLists.txt** file of the project is located, open the **ddgi-sample.sln** file generated after compilation(usually in the **build** folder), right-click **DDGIExample**, and choose **Set StartUp Projects** from the shortcut menu.
 
@@ -72,7 +72,7 @@ To apply DDGI, three phases are involved:
   - Update the camera and light source information;
   - Call the **Render** function of the DDGI SDK to perform rendering. The rendering result will be saved in the textures created in the preparations phase.
 
-The final result of direct lighting and DDGI indirect lighting is shown in the following figure.
+The final result of direct lighting and DDGI indirect lighting is shown in the following figure:
 
 ![Final_Shading](assets/final_shading.png)
 

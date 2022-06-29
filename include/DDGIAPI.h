@@ -83,7 +83,7 @@ enum class DDGIResult {
     UNKNOWN_ERROR,        /* *< Other unknown errors. */
 };
 
-enum class AttachmentTextureType { // get from unity c#, cannot use enum class
+enum class AttachmentTextureType {
     DDGI_IRRADIANCE = 0,
     DDGI_RELOCATION,
     DDGI_NORMAL_DEPTH,
@@ -120,9 +120,9 @@ struct DDGIMaterial {
     DDGIVulkanImage metallicRoughnessTexture;
 };
 
-// pos in local space.
+// vertex attribute.
 struct DDGIVertex {
-    DDGI::Vec3f pos;
+    DDGI::Vec3f pos; // vertex's position in local space.
     DDGI::Vec3f normal;
     DDGI::Vec2f uv0;
     DDGI::Vec2f uv1;
