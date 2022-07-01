@@ -47,9 +47,9 @@ adb shell am start -n "com.huawei.ddgi.vkExample/.VulkanActivity"
 1. Development environment
    - Visual Studio 2019 or later
    - Vulkan SDK 1.2.176.1 or later
-   - Cmake 3.16 or later
+   - CMake 3.16 or later
    - Python 3.6.0 or later
-2. Perform CMake compilation in the directory where the **CmakeLists.txt** file of the project is located, open the **ddgi-sample.sln** file generated after compilation(usually in the **build** folder), right-click **DDGIExample**, and choose **Set StartUp Projects** from the shortcut menu.
+2. Perform CMake compilation in the directory where the **CMakeLists.txt** file of the project is located, open the **ddgi-sample.sln** file generated after compilation(usually in the **build** folder), right-click **DDGIExample**, and choose **Set StartUp Projects** from the shortcut menu.
 
 Note: If the shader code of the project is modified, run the following command for an update:
 
