@@ -7,6 +7,7 @@ English | [中文](README_ZH.md)
  * [Compilation](#compilation)
  * [Example](#example)
  * [Reference Projects](#reference-projects)
+ * [Technical Support](#technical-support)
  * [License](#license)
 
 ## Introduction
@@ -83,6 +84,15 @@ The final result of direct lighting and DDGI indirect lighting is shown in the f
 [2] [learnOpenGL/PBR](https://learnopengl.com/PBR/Theory)
 
 [3] [Nvidia/RTXGI](https://github.com/NVIDIAGameWorks/RTXGI)
+
+## Technical Support
+
+If you are still evaluating HMS Core, obtain the latest information about HMS Core and share your insights with other developers at [Reddit](https://www.reddit.com/r/HuaweiDevelopers/.).
+
+- To resolve development issues, please go to [Stack Overflow](https://stackoverflow.com/questions/tagged/huawei-mobile-services?tab=Votes). You can ask questions below the huawei-mobile-services tag, and Huawei R&D experts can solve your problem online on a one-to-one basis.
+- To join the developer discussion, please visit [Huawei Developer Forum](https://forums.developer.huawei.com/forumPortal/en/forum/hms-core).
+
+If you have problems using the sample code, submit [issues](https://github.com/HMS-Core/hms-scene-fine--grained-demo/issues) and [pull requests](https://github.com/HMS-Core/hms-scene-fine--grained-demo/pulls) to the repository.
 
 ## License
 
