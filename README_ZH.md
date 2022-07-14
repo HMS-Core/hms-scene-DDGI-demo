@@ -14,7 +14,7 @@
 
 本项目主要是用于展示如使用华为提供的移动端动态漫反射全局光照（DDGI），在前向管线上实现动态光照漫反射全局照明的效果，提升场景画质。项目中关于Vulkan的管线借鉴了SaschaWillems的VulkanExample<sup>[\[1\]](https://github.com/SaschaWillems/Vulkan)</sup>项目，例子中关于PBR部分知识参考了LearnOpenGL<sup>[\[2\]](https://learnopengl-cn.github.io/07%20PBR/02%20Lighting/#pbr)</sup>, DDGI算法的实现参考了英伟达RTXGI<sup>[\[3\]](https://github.com/NVIDIAGameWorks/RTXGI)</sup>。
 
-Room场景上使能DDGI的效果如下，运行平台：Mate40Pro
+Room场景上使能DDGI的效果如下，运行平台：Mate40Pro。
 
 （为获得该房间模型，click [here](https://sketchfab.com/3d-models/room-266d02119c494b4cbaf759d774df8494); License: CC Attribution）
 
@@ -30,7 +30,7 @@ Room场景上使能DDGI的效果如下，运行平台：Mate40Pro
    - Android SDK 29.0.0及以上版本
    - Java JDK 1.8.0及以上版本
 
-设置环境变量ANDROID_HOME ANDROID_NDK_HOME分别指向 Android SDK目录和NDK目录
+设置环境变量ANDROID_HOME ANDROID_NDK_HOME分别指向 Android SDK目录和NDK目录。
 
 2. 编译运行
    1. 使用IDE：用Android Studio打开`android`目录，连接手机，点击运行按钮或快捷键Shift+F10即可执行代码。生成的apk文件归档在android\examples\bin目录下。
