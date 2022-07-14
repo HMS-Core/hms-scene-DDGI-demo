@@ -12,7 +12,7 @@ English | [中文](README_ZH.md)
 
 ## Introduction
 
-This project demonstrates how to apply the Dynamic Diffuse Global Illumination (DDGI) SDK provided by Huawei to a forward rendering pipeline on a mobile device to improve the rendering quality. References include the Vulkan example[[1\]](https://github.com/SaschaWillems/Vulkan) of SaschaWillems, PBR of Learn OpenGL[[2\]](https://learnopengl.com/PBR/Theory), and DDGI algorithm implementation of NVIDIA RTXGI[[3\]](https://github.com/NVIDIAGameWorks/RTXGI).
+This project demonstrates how to apply the Dynamic Diffuse Global Illumination (DDGI) SDK provided by Huawei to a forward rendering pipeline on a mobile device to improve the rendering quality. References include the Vulkan example<sup>[\[1\]](https://github.com/SaschaWillems/Vulkan)</sup> of SaschaWillems, PBR of Learn OpenGL<sup>[\[2\]](https://learnopengl.com/PBR/Theory)</sup>, and DDGI algorithm implementation of NVIDIA RTXGI<sup>[\[3\]](https://github.com/NVIDIAGameWorks/RTXGI)</sup>.
 
 The following video shows the effect of enabling DDGI for a room model on Mate 40 Pro.
 
