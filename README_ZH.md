@@ -14,7 +14,7 @@
 
 本项目主要是用于展示如使用华为提供的移动端动态漫反射全局光照（DDGI），在前向管线上实现动态光照漫反射全局照明的效果，提升场景画质。项目中关于Vulkan的管线借鉴了SaschaWillems的VulkanExample<sup>[\[1\]](https://github.com/SaschaWillems/Vulkan)</sup>项目，例子中关于PBR部分知识参考了LearnOpenGL<sup>[\[2\]](https://learnopengl-cn.github.io/07%20PBR/02%20Lighting/#pbr)</sup>, DDGI算法的实现参考了英伟达RTXGI<sup>[\[3\]](https://github.com/NVIDIAGameWorks/RTXGI)</sup>。
 
-Room场景上使能DDGI的效果如下，运行平台：Mate40Pro。
+Room场景上使能DDGI的效果如下，运行平台：Mate 40 Pro。
 
 （为获得该房间模型，click [here](https://sketchfab.com/3d-models/room-266d02119c494b4cbaf759d774df8494); License: CC Attribution）
 
